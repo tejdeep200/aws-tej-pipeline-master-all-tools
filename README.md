@@ -1,5 +1,24 @@
 # YouTube Trending Data Pipeline
 
+## Local verification
+
+Run `python -m pip install -r requirements-dev.txt` followed by
+`python scripts/verify_pipeline.py`. This runs the local unit tests, checks
+tracked Python and JSON syntax, and checks state-machine transition targets.
+GitHub Actions runs the same checks on pushes and pull requests.
+These checks do not verify deployed AWS resources or an end-to-end cloud run.
+
+The actual state-machine file is `step_function/pipeline_orchestration.json`.
+Glue scripts are in `data/Glue_jobs/`; the ingestion Lambda is
+`data/lamda/youtube_api_ingestion/lamda_functions.py` (handler
+`lamda_functions.lambda_handler`). Reference conversion is in
+`data/lambda/json_to_parquet_format/lamda_function.py` (handler
+`lamda_function.lambda_handler`); data quality is `data_quality/dq_lamda.py`
+(handler `dq_lamda.lambda_handler`). The generic deployment examples below
+must be adapted to these paths and the resource names in
+`data/scripts/information.md`.
+
+
 A cloud-native ETL pipeline that ingests YouTube trending video data across 10 regions, transforms it through a medallion architecture (Bronze > Silver > Gold), enforces data quality gates, and produces analytics-ready aggregations — all orchestrated by AWS Step Functions.
 
 ![Architecture Diagram](YouTube%20Trending%20Data%20Pipeline.png)

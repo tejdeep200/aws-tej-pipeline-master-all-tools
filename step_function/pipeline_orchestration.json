@@ -9,7 +9,8 @@
         "FunctionName": "arn:aws:lambda:us-east-2:592505727819:function:tej-data-pipeline-youtube-ingestion-dev",
         "Payload": {
           "source": "aws.stepfunctions",
-          "id.$": "$$.Execution.Id"
+          "id.$": "$$.Execution.Id",
+          "time.$": "$$.Execution.StartTime"
         }
       },
       "ResultPath": "$.ingestion_result",
